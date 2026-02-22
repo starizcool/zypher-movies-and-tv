@@ -1,17 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>StreamHub</title>
+  <title>GreenStream</title>
   <style>
     body {
-      background-color: #0f0f14;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
+      margin: 0;
+      background: black;
+      font-family: Consolas, monospace;
+      color: #00ff99;
+      overflow-x: hidden;
     }
 
     h1 {
-      color: #00c3ff;
+      text-align: center;
+      text-shadow: 0 0 10px #00ff99;
+      margin-top: 20px;
+    }
+
+    #particles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: #00ff99;
+      opacity: 0.7;
+      animation: float linear infinite;
+    }
+
+    @keyframes float {
+      from { transform: translateY(100vh); }
+      to { transform: translateY(-10vh); }
     }
 
     .container {
@@ -19,61 +44,101 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
+      padding: 20px;
     }
 
     .card {
-      background: #1a1a22;
-      padding: 15px;
+      background: rgba(0, 255, 153, 0.05);
+      border: 1px solid #00ff99;
       border-radius: 10px;
-      width: 300px;
-      box-shadow: 0 0 15px rgba(0,195,255,0.3);
+      padding: 15px;
+      width: 320px;
+      box-shadow: 0 0 20px #00ff99;
     }
 
     iframe {
       width: 100%;
-      height: 170px;
+      height: 180px;
+      border: none;
       border-radius: 8px;
+    }
+
+    input {
+      width: 100%;
+      margin-top: 8px;
+      padding: 5px;
+      background: black;
+      border: 1px solid #00ff99;
+      color: #00ff99;
     }
 
     button {
       margin-top: 10px;
-      padding: 8px 15px;
-      background: #00c3ff;
+      padding: 8px;
+      width: 100%;
+      background: #00ff99;
       border: none;
-      border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
+      border-radius: 6px;
     }
 
     button:hover {
-      background: #0099cc;
+      background: #00cc77;
+    }
+
+    #addButton {
+      width: 200px;
+      margin: 20px auto;
+      display: block;
     }
   </style>
 </head>
-
 <body>
 
-<h1>🎬 StreamHub</h1>
+<div id="particles"></div>
 
-<div class="container">
+<h1>🟢 GreenStream Portal</h1>
 
-  <div class="card">
-    <h3>Example Movie Trailer</h3>
-    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-    <button onclick="window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ')">
-      Watch Full Video
-    </button>
-  </div>
+<button id="addButton" onclick="addCard()">➕ Add New Movie</button>
+
+<div class="container" id="cardContainer">
 
   <div class="card">
-    <h3>Example TV Show Clip</h3>
-    <iframe src="https://www.youtube.com/embed/9bZkp7q19f0" allowfullscreen></iframe>
-    <button onclick="window.open('https://www.youtube.com/')">
-      Open Source
-    </button>
+    <h3>Example Title</h3>
+    <iframe src="https://example.com/embed-here"></iframe>
+    <input type="text" placeholder="Paste embed link here..." 
+      oninput="this.previousElementSibling.src = this.value">
   </div>
 
 </div>
+
+<script>
+  // Create floating particles
+  for (let i = 0; i < 120; i++) {
+    let p = document.createElement("div");
+    p.className = "particle";
+    p.style.left = Math.random() * 100 + "vw";
+    p.style.animationDuration = (Math.random() * 5 + 5) + "s";
+    document.getElementById("particles").appendChild(p);
+  }
+
+  function addCard() {
+    const container = document.getElementById("cardContainer");
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <h3>New Title</h3>
+      <iframe src="https://example.com/embed-here"></iframe>
+      <input type="text" placeholder="Paste embed link here..."
+        oninput="this.previousElementSibling.src = this.value">
+    `;
+
+    container.appendChild(card);
+  }
+</script>
 
 </body>
 </html>
